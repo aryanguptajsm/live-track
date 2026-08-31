@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Share Location</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="share-wrap">
+    <h1>Location Sharing</h1>
+    <p>Tap start to share this device's live location. You can stop at any time.</p>
+
+    <div id="status">
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText">Not sharing</span>
+    </div>
+
+    <button class="btn btn-start" id="startBtn">Start Sharing</button>
+    <button class="btn btn-stop" id="stopBtn" style="display: none;">Stop Sharing</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/share.js"></script>
+</body>
+</html>
