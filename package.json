@@ -17,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/aryanguptajsm/live-track/issues"
   },
-  "homepage": "https://github.com/aryanguptajsm/live-track#readme"
+  "homepage": "https://github.com/aryanguptajsm/live-track#readme",
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "socket.io": "^4.8.3"
+  }
 }
