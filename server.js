@@ -3,7 +3,7 @@ const session = require("express-session");
 const http = require("http");
 const { Server } = require("socket.io");
 const path = require("path");
-const config = require("./config");
+const config = require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
