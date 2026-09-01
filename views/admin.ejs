@@ -12,17 +12,30 @@
 </head>
 <body>
   <div class="topbar">
-    <h1>Live Location Tracker</h1>
-    <div style="display: flex; align-items: center; gap: 14px;">
+    <div class="topbar-brand">
+      <button type="button" id="sidebarToggle" class="sidebar-toggle" aria-controls="targetSidebar" aria-expanded="false">
+        &#9776;
+        <span>Targets</span>
+      </button>
+      <h1>Live Location Tracker</h1>
+    </div>
+    <div class="topbar-actions">
       <span id="statusPill" class="status-pill">Waiting for signal</span>
       <a href="/logout">Logout</a>
     </div>
   </div>
 
   <div class="admin-layout">
-    <aside class="target-sidebar">
-      <h2>Targets</h2>
-      <p>Select a target to open the live map and follow the latest coordinates.</p>
+    <aside id="targetSidebar" class="target-sidebar">
+      <div class="sidebar-header">
+        <div>
+          <h2>Targets</h2>
+          <p>Select a target to open the live map and follow the latest coordinates.</p>
+        </div>
+        <button type="button" id="sidebarClose" class="sidebar-close" aria-label="Close sidebar">
+          &times;
+        </button>
+      </div>
       <a class="share-link" href="/share" target="_blank" rel="noopener">Open sharing page</a>
       <ul id="targetList" class="target-list">
         <% (targets || []).forEach((target) => { %>
@@ -50,6 +63,8 @@
       <div id="map"></div>
     </main>
   </div>
+
+  <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
 
   <script>
     window.ADMIN_TARGETS =  <%- JSON.stringify(targets || []) %>;
