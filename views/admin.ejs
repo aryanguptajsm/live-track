@@ -9,24 +9,51 @@
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   />
-  <style>
-    /* Dim the map tiles slightly so it matches the dark theme */
-    #map {
-      filter: grayscale(0.4) brightness(0.85) contrast(1.05);
-    }
-  </style>
 </head>
 <body>
   <div class="topbar">
     <h1>Live Location Tracker</h1>
     <div style="display: flex; align-items: center; gap: 14px;">
-      <span id="statusPill" class="status-pill">Waiting for signal…</span>
+      <span id="statusPill" class="status-pill">Waiting for signal</span>
       <a href="/logout">Logout</a>
     </div>
   </div>
 
-  <div id="map"></div>
+  <div class="admin-layout">
+    <aside class="target-sidebar">
+      <h2>Targets</h2>
+      <p>Select a target to open the live map and follow the latest coordinates.</p>
+      <a class="share-link" href="/share" target="_blank" rel="noopener">Open sharing page</a>
+      <ul id="targetList" class="target-list">
+        <% (targets || []).forEach((target) => { %>
+          <li>
+            <button type="button" class="target-item" data-target-id="<%= target.id %>">
+              <span class="target-id"><%= target.id %></span>
+              <span class="target-status" data-target-status>
+                <%= target.hasLocation ? "Last update available" : "Waiting for signal" %>
+              </span>
+            </button>
+          </li>
+        <% }) %>
+      </ul>
+      <p id="emptyTargetMessage" class="empty-target-message">Waiting for a user to allow location access.</p>
+    </aside>
 
+    <main class="map-panel">
+      <div class="map-toolbar">
+        <div>
+          <span class="eyebrow">Selected target</span>
+          <h2 id="selectedTargetLabel">No target selected</h2>
+          <div id="selectedTargetMeta" class="selected-meta">Click a target to open the live map.</div>
+        </div>
+      </div>
+      <div id="map"></div>
+    </main>
+  </div>
+
+  <script>
+    window.ADMIN_TARGETS =  <%- JSON.stringify(targets || []) %>;
+  </script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/javascripts/admin.js"></script>

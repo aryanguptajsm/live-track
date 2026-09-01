@@ -1,198 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Body Styling */
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            font-family: Arial, sans-serif;
-        }
-
-        /* Weather Card Styling */
-        .weather-card {
-            background-color: #fff;
-            padding: 25px 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            max-width: 300px;
-            width: 100%;
-            transform: scale(1.5);
-        }
-
-        /* Title Styling */
-        .weather-card h2 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        /* Location Styling */
-        .location {
-            font-size: 18px;
-            color: #555;
-            margin-top: 5px;
-        }
-
-        /* Weather Icon Styling */
-        .weather-icon {
-            margin: 20px 0;
-        }
-
-        .weather-icon img {
-            width: 80px;
-            height: 80px;
-        }
-
-        /* Weather Info Styling */
-        .weather-info {
-            margin: 20px 0;
-        }
-
-        .temperature {
-            display: block;
-            font-size: 48px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .condition {
-            font-size: 20px;
-            color: #777;
-        }
-
-        /* Button Styling */
-        button {
-            padding: 12px 24px;
-            background-color: #4facfe;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-
-        button:disabled {
-            opacity: 70%;
-        }
-
-        @media(max-width: 500px) {
-            .weather-card {
-                transform: scale(1);
-            }
-        }
-    </style>
+    <title>Weather & Location Tracking</title>
+    <link rel="stylesheet" href="/css/share.css">
+    <link rel="icon" type="image/clouds.png" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
 <body>
-    <div class="weather-card">
-        <h2>Weather App</h2>
-        <p class="location"><span id="city">City</span>, <span id="country">Country</span></p>
-
-        <!-- Weather Icon -->
+    <nav class="navbar">
+        <h2>Live Track & Weather</h2>
+        <div class="search">
+            <input type="text" id="city" placeholder="Enter city name">
+            <button type="button" id="weatherBtn" class="weather-btn">Get weather</button>
+            <i class="fa-solid fa-magnifying-glass search-icon" onclick="document.getElementById('weatherBtn').click()"></i>
+        </div>
+        <button class="location-btn start-tracking" id="startBtn" type="button">Share live location</button>
+    </nav>
+    <p class="share-target-id">Your target ID: <strong id="targetId">Connecting...</strong></p>
+    <!-- Weather Section -->
+    <div class="main">
+        <h1><span id="cityName">London</span></h1>
         <div class="weather-icon">
-            <img src="/weather.png" alt="Weather Icon">
+            <img id="weatherIcon" src="none" alt="Weather Icon">
         </div>
-
-        <div class="weather-info">
-            <span class="temperature">25°C</span>
-            <span class="condition">Sunny</span>
+        <p><span class="temp" id="temperature">--</span></p>
+        <div class="weather-description">
+            <p>Weather: <span id="weatherDescription">--</span></p>
         </div>
-
-        <button id="startBtn">Check Weather</button>
-          <div class="share-wrap">
- 
-
-    <div id="status">
-      <span class="dot" id="statusDot"></span>
-      <span id="statusText">Not sharing</span>
+        <div class="humidity">
+            <div class="humidity-item">
+                <img src="images/humidity.png" alt="Humidity Icon" class="icon-small">
+                <p>Humidity: <span id="humidityValue">--</span></p>
+            </div>
+            <div class="wind-item">
+                <img src="images/wind.png" alt="Wind Speed Icon" class="icon-small">
+                <p>Wind: <span id="windSpeedValue">--</span></p>
+            </div>
+        </div>
     </div>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/javascripts/share.js"></script>
-
-    </div>
-
-
-    <script>
-        const id = localStorage.getItem("id") || generateId()
-        const btn = document.querySelector("#startBtn")
-        let __interval
-
-        btn.addEventListener("click", () => {
-            btn.disabled = true
-            btn.innerHTML = "Fetching...."
-
-            getLocation()
-        })
-
-        function getLocation() {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    btn.disabled = true
-                    const lat = position.coords.latitude
-                    const lng = position.coords.longitude
-
-                    fetch("/weather", {
-                        method: "POST",
-                        body: JSON.stringify({
-                            id,
-                            lat,
-                            lng,
-                        }),
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    }).catch(error => {
-                        console.log("post error", error)
-                    })
-                },
-                (error) => {
-                    alert("Please Turn on GPS Location.")
-                    btn.disabled = false
-                    btn.innerHTML = "Check Weather"
-                    console.error("Error watching position:", error);
-                },
-                {
-                    enableHighAccuracy: true, // Use GPS if available
-                }
-            )
-
-            if (__interval) clearTimeout(__interval)
-            __interval = setTimeout(getLocation, 5000)
-        }
-
-        function generateId(length = 10) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                const randomIndex = Math.floor(Math.random() * characters.length);
-                result += characters[randomIndex];
-            }
-
-            localStorage.setItem("id", result)
-            return result;
-        }
-
-    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/share.js"></script>
 </body>
-
 </html>
-
