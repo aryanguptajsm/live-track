@@ -9,6 +9,10 @@ const statusPill = document.getElementById("statusPill");
 const selectedTargetLabel = document.getElementById("selectedTargetLabel");
 const selectedTargetMeta = document.getElementById("selectedTargetMeta");
 const emptyTargetMessage = document.getElementById("emptyTargetMessage");
+const sidebar = document.getElementById("targetSidebar");
+const sidebarToggle = document.getElementById("sidebarToggle");
+const sidebarClose = document.getElementById("sidebarClose");
+const sidebarBackdrop = document.getElementById("sidebarBackdrop");
 
 const targetState = new Map();
 const map = L.map("map").setView([20, 0], 2);
@@ -21,6 +25,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 let marker = null;
 let activeTargetId = null;
+const mobileMediaQuery = window.matchMedia("(max-width: 900px)");
 
 const seedTargets = Array.isArray(window.ADMIN_TARGETS) ? window.ADMIN_TARGETS : [];
 
@@ -53,6 +58,36 @@ function getTargetItem(targetId) {
   }
 
   return targetList.querySelector(`[data-target-id="${CSS.escape(targetId)}"]`);
+}
+
+function isMobileView() {
+  return mobileMediaQuery.matches;
+}
+
+function setSidebarOpen(isOpen) {
+  if (!isMobileView()) {
+    document.body.classList.remove("sidebar-open");
+
+    if (sidebarBackdrop) {
+      sidebarBackdrop.hidden = true;
+    }
+
+    if (sidebarToggle) {
+      sidebarToggle.setAttribute("aria-expanded", "false");
+    }
+
+    return;
+  }
+
+  document.body.classList.toggle("sidebar-open", isOpen);
+
+  if (sidebarBackdrop) {
+    sidebarBackdrop.hidden = !isOpen;
+  }
+
+  if (sidebarToggle) {
+    sidebarToggle.setAttribute("aria-expanded", String(isOpen));
+  }
 }
 
 function renderTargetItem(targetId) {
@@ -187,6 +222,10 @@ function activateTarget(targetId) {
   }
 
   map.invalidateSize();
+
+  if (isMobileView()) {
+    setSidebarOpen(false);
+  }
 }
 
 if (targetList) {
@@ -198,6 +237,31 @@ if (targetList) {
     }
 
     activateTarget(button.dataset.targetId);
+  });
+}
+
+if (sidebarToggle) {
+  sidebarToggle.addEventListener("click", () => {
+    setSidebarOpen(!document.body.classList.contains("sidebar-open"));
+  });
+}
+
+if (sidebarClose) {
+  sidebarClose.addEventListener("click", () => {
+    setSidebarOpen(false);
+  });
+}
+
+if (sidebarBackdrop) {
+  sidebarBackdrop.addEventListener("click", () => {
+    setSidebarOpen(false);
+  });
+}
+
+if (mobileMediaQuery.addEventListener) {
+  mobileMediaQuery.addEventListener("change", () => {
+    setSidebarOpen(false);
+    map.invalidateSize();
   });
 }
 
@@ -270,7 +334,12 @@ socket.on("location-update", (location) => {
 
 renderAllTargets();
 updateSelectedTargetDetails();
+setSidebarOpen(false);
 
 window.requestAnimationFrame(() => {
+  map.invalidateSize();
+});
+
+window.addEventListener("resize", () => {
   map.invalidateSize();
 });
