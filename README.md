@@ -27,5 +27,5 @@ npm start
  Access the administrative dashboard using these default credentials:
 ```js
 username: admin
-password: admin
+password: 12345678
 ```
