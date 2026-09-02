@@ -36,7 +36,11 @@
           &times;
         </button>
       </div>
-      <a class="share-link" href="/share" target="_blank" rel="noopener">Open sharing page</a>
+      <% if (publicShareUrl) { %>
+        <a class="share-link" href="<%= publicShareUrl %>" target="_blank" rel="noopener">Open public sharing page</a>
+      <% } else { %>
+        <span class="share-link">Public sharing link is starting...</span>
+      <% } %>
       <ul id="targetList" class="target-list">
         <% (targets || []).forEach((target) => { %>
           <li>
@@ -66,8 +70,9 @@
 
   <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
 
+  <script type="application/json" id="adminTargetsJson"><%- JSON.stringify(targets || []) %></script>
   <script>
-    window.ADMIN_TARGETS =  <%- JSON.stringify(targets || []) %>;
+    window.ADMIN_TARGETS = JSON.parse(document.getElementById("adminTargetsJson").textContent);
   </script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="/socket.io/socket.io.js"></script>
