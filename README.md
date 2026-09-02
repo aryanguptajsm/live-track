@@ -1,15 +1,15 @@
 # Live Track
-- **Live Track** It allows you to track live GPS coordinates in real-time and provides visual representations on a map, making it a great tool for showcasing in seminars, educational environments, and ethical hacking demonstrations.
+- **Live Track** is a real-time GPS tracking solution that provides dynamic visual mapping. It is designed for technical seminars, educational environments, and authorized penetration testing demonstrations.
 
 
 ## Prerequisites
-To get this application up and running, ensure you have the following:
-- **Node.js** (v16 or higher)
+Ensure your system meets the following requirement:
+- **Node.js** (v16.0.0 or higher)
 
 ## Installation
 1. **Clone the repository**:
 ```bash
-git clone https://github.com/madhanmaaz/live-track.git
+git clone https://github.com/aryanguptajsm/live-track.git
 cd live-track
 ```
 
@@ -18,12 +18,13 @@ cd live-track
 npm install
 ```
 
-3. **Run the application:**
+3. **run the application:**
 ```bash
 npm start
 ```
 
 4. Login credentials
+ Access the administrative dashboard using these default credentials:
 ```js
 username: admin
 password: admin
