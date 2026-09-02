@@ -157,7 +157,7 @@ body {
 
 .status-pill.live {
   background: #2e4a34;
-  color: #9fe0ab;
+  color: #00fbcd;
 }
 
 .topbar a {
@@ -233,8 +233,44 @@ body {
 .share-link {
   display: inline-block;
   margin-bottom: 18px;
-  color: #9fc0ff;
+  color: #05ffd6f2;
   font-size: 13px;
+   font-style: normal;
+   font-weight: 500;
+   line-height: 1.5;
+   text-decoration: none;
+}
+
+.copy-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-left: 50px;
+  padding: 5px 9px;
+  background: #303030;
+  border: 1px solid #4a4c54;
+  border-radius: 8px;
+  color: #f0f0f0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.copy-link-button:hover {
+  background: #454851;
+  border-color: #5a5c66;
+}
+
+.copy-link-button:active {
+  transform: translateY(1px);
+}
+
+.copy-link-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(155, 166, 185, 0.3);
 }
 
 .target-item {
