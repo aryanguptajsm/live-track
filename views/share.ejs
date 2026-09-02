@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather & Location Tracking</title>
+    <title>Weather </title>
     <link rel="stylesheet" href="/css/share.css">
     <link rel="icon" type="image/clouds.png" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <nav class="navbar">
-        <h2>Live Track & Weather</h2>
+        <h2>Weather</h2>
         <div class="search">
             <input type="text" id="city" placeholder="Enter city name">
-            <button type="button" id="weatherBtn" class="weather-btn">Get weather</button>
+        
             <i class="fa-solid fa-magnifying-glass search-icon" onclick="document.getElementById('weatherBtn').click()"></i>
         </div>
-        <button class="location-btn start-tracking" id="startBtn" type="button">Share live location</button>
+            <button type="button" id="startBtn" class="weather-btn">Get weather</button>
+       
     </nav>
-    <p class="share-target-id">Your target ID: <strong id="targetId">Connecting...</strong></p>
     <!-- Weather Section -->
     <div class="main">
         <h1><span id="cityName">London</span></h1>

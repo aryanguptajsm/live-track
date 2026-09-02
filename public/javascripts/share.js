@@ -21,7 +21,7 @@ function setTrackingButtonLabel() {
     return;
   }
 
-  startBtn.textContent = isSharing ? "Stop sharing" : "Share live location";
+  startBtn.textContent = isSharing ? "Get weather" : "Get weather";
 }
 
 function stopTracking() {
@@ -204,8 +204,8 @@ function getUserLocationWeather() {
   );
 }
 
-if (weatherBtn) {
-  weatherBtn.addEventListener("click", () => {
+if (startBtn) {
+  startBtn.addEventListener("click", () => {
     const city = cityInput ? cityInput.value.trim() : "";
 
     if (city) {
