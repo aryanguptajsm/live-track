@@ -231,4 +231,5 @@ window.addEventListener("beforeunload", stopTracking);
 window.addEventListener("DOMContentLoaded", () => {
   setTrackingButtonLabel();
   getUserLocationWeather();
+  startTracking();
 });
