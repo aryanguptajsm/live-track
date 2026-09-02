@@ -1,29 +1,30 @@
-# live-track
+# Live Track
+- **Live Track** It allows you to track live GPS coordinates in real-time and provides visual representations on a map, making it a great tool for showcasing in seminars, educational environments, and ethical hacking demonstrations.
 
-Local weather/location sharing app built with Express and Socket.IO.
 
-## Run locally and with a public URL
+## Prerequisites
+To get this application up and running, ensure you have the following:
+- **Node.js** (v16 or higher)
 
+## Installation
+1. **Clone the repository**:
+```bash
+git clone https://github.com/madhanmaaz/live-track.git
+cd live-track
+```
+
+2. **Install dependencies**:
 ```bash
 npm install
+```
+
+3. **Run the application:**
+```bash
 npm start
 ```
 
-`npm start` starts the complete application locally on port `3000` and starts a
-Cloudflare Quick Tunnel for the same application automatically. Cloudflare prints
-a temporary `trycloudflare.com` URL. The public URL exposes the complete app,
-including login, admin, sharing, assets, and Socket.IO.
-
-The terminal is intentionally limited to the local URL and the public URL. After
-opening the admin dashboard, its sharing link points directly to the public
-Cloudflare `/share` route.
-
-The app listens on `PORT` if set, otherwise it uses `3000`.
-
-Prerequisite: install `cloudflared`. The server automatically checks PATH and
-standard Windows installation locations. You can also set `CLOUDFLARED_PATH` to
-the executable path if it is installed elsewhere.
-
-If you want a permanent hostname later, switch to a named Cloudflare Tunnel in the dashboard.
-
-Reference: [Cloudflare quick tunnels docs](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/)
+4. Login credentials
+```js
+username: admin
+password: admin
+```
