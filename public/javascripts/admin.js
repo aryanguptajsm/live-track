@@ -4,6 +4,25 @@ const socket = io({
   }
 });
 
+
+ const copyShareLinkButton = document.getElementById("copyShareLink");
+    if (copyShareLinkButton) {
+      copyShareLinkButton.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(copyShareLinkButton.dataset.shareUrl);
+          copyShareLinkButton.textContent = "Copied";
+          setTimeout(() => {
+            copyShareLinkButton.textContent = "Copy link";
+          }, 1500);
+        } catch (error) {
+          copyShareLinkButton.textContent = "Copy failed";
+          setTimeout(() => {
+            copyShareLinkButton.textContent = "Copy link";
+          }, 1500);
+        }
+      });
+    }
+
 const targetList = document.getElementById("targetList");
 const statusPill = document.getElementById("statusPill");
 const selectedTargetLabel = document.getElementById("selectedTargetLabel");

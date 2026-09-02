@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="/css/login.css" />
+  <link rel="stylesheet" href="/css/style.css" />
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -37,7 +37,10 @@
         </button>
       </div>
       <% if (publicShareUrl) { %>
-        <a class="share-link" href="<%= publicShareUrl %>" target="_blank" rel="noopener">Open public sharing page</a>
+        <div class="share-link-row">
+          <a class="share-link" href="<%= publicShareUrl %>" target="_blank" rel="noopener">Open public sharing page</a>
+          <button type="button" id="copyShareLink" class="copy-link-button" data-share-url="<%= publicShareUrl %>">Copy link</button>
+        </div>
       <% } else { %>
         <span class="share-link">Public sharing link is starting...</span>
       <% } %>
@@ -73,6 +76,7 @@
   <script type="application/json" id="adminTargetsJson"><%- JSON.stringify(targets || []) %></script>
   <script>
     window.ADMIN_TARGETS = JSON.parse(document.getElementById("adminTargetsJson").textContent);
+
   </script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="/socket.io/socket.io.js"></script>
