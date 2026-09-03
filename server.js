@@ -46,7 +46,7 @@ function requireLogin(req, res, next) {
   return res.redirect("/login");
 }
 
-// ---------- Routes --------
+// ---------- Routes ----------
 app.get("/login", (req, res) => {
   res.render("login", { error: null });
 });
