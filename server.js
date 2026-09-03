@@ -206,6 +206,7 @@ function startCloudflare() {
 
 server.listen(PORT, () => {
   console.log(`Local URL: http://localhost:${PORT}`);
+    console.log(`Remote URL: ${publicUrl}`);
   startCloudflare();
 });
 
