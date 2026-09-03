@@ -83,7 +83,7 @@ app.get("/", (req, res) => {
   res.redirect("/login");
 });
 
-// ---------- Socket.io --------
+// ---------- Socket.io -------
 io.on("connection", (socket) => {
   const role = socket.handshake.query.role;
 
